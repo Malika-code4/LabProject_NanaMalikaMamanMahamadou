@@ -1,0 +1,82 @@
+* { margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+body {
+    background-color: lightblue;
+    margin: 30px;
+    padding: 30px;
+}
+header,nav, main {
+    padding : 20px;
+}
+header h1 {
+    text-align: center;
+    color: red,
+}
+.center-box {
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    flex-direction : column;
+    height : 100vh;
+    gap : 1rem;
+}
+.btn {
+    background-color : lightblue;
+    color : black;
+    padding : 10px;
+    border : none;
+    border-radius : 5px;
+    text-decoration : none;
+    text-align : center;
+
+}
+.btn:hover {
+    background-color :aquamarine;
+}
+.form-container {
+    max-width : 400px;
+    margin : auto;
+    background-color : white;
+    padding : 20px;
+    border-radius : 8px;
+    box-shadow : 0 0 10px rgba(0,0,0,0.1);
+}
+form {
+    display : flex;
+    flex-direction : column;
+}
+label {
+margin-top : 10px;
+font-weight : bold;
+}
+input, select{
+    padding : 10px;
+    margin-top : 5px;
+    border : 1px, solid #ccc;
+    border-radius : 4px;
+}
+nav ul {
+    display: flex;
+    list-style: none;
+    background-color:aquamarine;
+    padding : 10px;
+}
+nav ul li {
+    margin-right : 20px;
+}
+nav ul li a {
+    color:black;
+    text-decoration: none;
+    font-weight : bold;
+
+}
+nav ul li a :hover {
+    text-decoration : underline;
+}
+section{
+    margin : 20px 0;
+}
