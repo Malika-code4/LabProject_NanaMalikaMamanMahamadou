@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Attendance Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-flex">
+            <div class="navbar-brand">
+                <h1>📋 Attendance Manager</h1>
+            </div>
+            <div class="navbar-menu">
+                <span id="userInfo" class="user-info">
+                    Welcome, <strong id="userName"></strong> (<span id="userRole"></span>)
+                </span>
+                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" data-view="dashboard">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-view="courses">
+                    <span class="menu-icon">📚</span>
+                    <span class="menu-text">Courses</span>
+                </a>
+                <a href="#" class="menu-item" id="requestsMenu" style="display: none;">
+                    <span class="menu-icon">📝</span>
+                    <span class="menu-text">Requests</span>
+                </a>
+                <a href="#" class="menu-item" id="createCourseMenu" style="display: none;">
+                    <span class="menu-icon">➕</span>
+                    <span class="menu-text">Create Course</span>
+                </a>
+                <a href="#" class="menu-item" data-view="profile">
+                    <span class="menu-icon">👤</span>
+                    <span class="menu-text">Profile</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-content">
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="stats-card">
+                        <div class="stats-icon">📚</div>
+                        <div class="stats-info">
+                            <p class="stats-label">Courses</p>
+                            <p class="stats-value" id="coursesCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-icon">✅</div>
+                        <div class="stats-info">
+                            <p class="stats-label">Attendance</p>
+                            <p class="stats-value" id="attendanceRate">--</p>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-icon">📝</div>
+                        <div class="stats-info">
+                            <p class="stats-label">Pending Requests</p>
+                            <p class="stats-value" id="pendingRequests">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dashboardStudentInfo" style="display: none;" class="info-section">
+                    <h3>Your Courses</h3>
+                    <div id="dashboardCourses" class="courses-list">
+                        <p class="empty-state">No courses yet. <a href="#" class="menu-item" data-view="courses">Browse courses</a></p>
+                    </div>
+                </div>
+
+                <div id="dashboardFacultyInfo" style="display: none;" class="info-section">
+                    <h3>Your Courses</h3>
+                    <div id="dashboardFacultyCourses" class="courses-list">
+                        <p class="empty-state">You haven't created any courses yet. <a href="#" class="menu-item" data-view="createCourse">Create a course</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses View -->
+            <section id="view-courses" class="view">
+                <h2>Courses</h2>
+
+                <!-- Faculty: Create Course Form -->
+                <div id="facultyCreateForm" style="display: none;" class="card form-section">
+                    <h3>Create New Course</h3>
+                    <form id="createCourseForm" class="form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="courseCode">Course Code</label>
+                                <input 
+                                    type="text" 
+                                    id="courseCode" 
+                                    placeholder="e.g., CS101"
+                                    required
+                                >
+                                <span class="error-message" id="courseCodeError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="courseTitle">Course Title</label>
+                                <input 
+                                    type="text" 
+                                    id="courseTitle" 
+                                    placeholder="e.g., Introduction to Computer Science"
+                                    required
+                                >
+                                <span class="error-message" id="courseTitleError"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Course</button>
+                        <div id="createCourseMessage" class="message"></div>
+                    </form>
+                </div>
+
+                <!-- Courses List -->
+                <div class="card">
+                    <h3 id="coursesListTitle">Available Courses</h3>
+                    <div id="coursesList" class="courses-list">
+                        <p class="empty-state">Loading courses...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Requests View (Faculty Only) -->
+            <section id="view-requests" class="view">
+                <h2>Course Requests</h2>
+                <div id="requestsList" class="requests-list">
+                    <p class="empty-state">Loading requests...</p>
+                </div>
+            </section>
+
+            <!-- Create Course View (Faculty Only) -->
+            <section id="view-createCourse" class="view">
+                <h2>Create New Course</h2>
+                <div class="card">
+                    <form id="createCourseForm2" class="form">
+                        <div class="form-group">
+                            <label for="courseCode2">Course Code</label>
+                            <input 
+                                type="text" 
+                                id="courseCode2" 
+                                placeholder="e.g., CS101"
+                                required
+                            >
+                            <span class="error-message" id="courseCodeError2"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="courseTitle2">Course Title</label>
+                            <input 
+                                type="text" 
+                                id="courseTitle2" 
+                                placeholder="e.g., Introduction to Computer Science"
+                                required
+                            >
+                            <span class="error-message" id="courseTitleError2"></span>
+                        </div>
+
+                        <div id="createCourseMessage2" class="message"></div>
+                        <button type="submit" class="btn btn-primary">Create Course</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Profile View -->
+            <section id="view-profile" class="view">
+                <h2>Profile</h2>
+                <div class="card">
+                    <div class="profile-info">
+                        <div class="profile-field">
+                            <label>Username:</label>
+                            <p id="profileUsername">-</p>
+                        </div>
+                        <div class="profile-field">
+                            <label>Role:</label>
+                            <p id="profileRole">-</p>
+                        </div>
+                        <div class="profile-field">
+                            <label>User ID:</label>
+                            <p id="profileUserId">-</p>
+                        </div>
+                    </div>
+                    <button id="logoutBtnProfile" class="btn btn-danger">Logout</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for course details -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="modalCourseTitle">Course Details</h2>
+            <div id="modalCourseDetails">
+                <p><strong>Code:</strong> <span id="modalCourseCode">-</span></p>
+                <p><strong>Title:</strong> <span id="modalCourseTitle2">-</span></p>
+                <p><strong>Faculty:</strong> <span id="modalCourseFaculty">-</span></p>
+                <p><strong>Status:</strong> <span id="modalCourseStatus">-</span></p>
+            </div>
+            <div id="modalCourseActions" class="modal-actions">
+                <button id="requestJoinBtn" class="btn btn-primary" style="display: none;">Request to Join</button>
+                <button id="viewRequestsBtn" class="btn btn-secondary" style="display: none;">View Requests</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for request management (Faculty) -->
+    <div id="requestsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Student Requests</h2>
+            <div id="modalRequestsList" class="requests-list">
+                <p class="empty-state">No requests.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Attendance Manager. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/course.js"></script>
+</body>
+</html>
